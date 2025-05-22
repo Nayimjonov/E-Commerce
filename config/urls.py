@@ -23,9 +23,9 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Astrum Academy API",
+        title="E-Commerce API",
         default_version="v1",
-        description="API for Astrum IT Academy website",
+        description="API for E-Commerce website",
         terms_of_service="https://www.astrum.uz/terms/",
         contact=openapi.Contact(email="info@astrum.uz"),
         license=openapi.License(name="MIT License"),
@@ -41,6 +41,7 @@ urlpatterns = [
 
 urlpatterns += [
     path("api/v1/", include(("users.urls", "users"), "users")),
+    path("api/v1/", include(("products.urls", "products"), "products")),
 
 ]
 

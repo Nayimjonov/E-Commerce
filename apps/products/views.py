@@ -15,4 +15,4 @@ class ProductListView(ListAPIView):
     filterset_class = ProductFilter
     search_fields = ['title', 'description']
     ordering_fields = ['price', 'created_at', 'title', 'average_rating']
-    ordering = ['title']  # по умолчанию
+    ordering = ['title']
