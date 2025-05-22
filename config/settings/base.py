@@ -38,6 +38,10 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "common",
     "users",
+    'cart',
+    'orders',
+    'products',
+    'reviews'
 ]
 INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
