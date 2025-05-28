@@ -13,6 +13,10 @@ from users.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    class Role(models.TextChoices):
+        USER = 'user', 'User'
+        ADMIN = 'admin', 'Admin'
+
     guid = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False, db_index=True
     )
@@ -29,17 +33,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
-        help_text=_(
-            "Designates whether the user can log into this admin site."
-        ),
+        help_text=_("Designates whether the user can log into this admin site."),
     )
     is_active = models.BooleanField(
         _("active"),
         default=True,
-        help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
-        ),
+        help_text=_("Designates whether this user should be treated as active."),
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     phone = models.CharField(
@@ -49,6 +48,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
     )
     full_name = models.CharField(max_length=255, null=True)
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        default=Role.USER,
+    )
 
     objects = UserManager()
 
@@ -73,16 +77,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def add_to_cache(key, value, ttl=120):
-        """If the entered key is already taken,
-        then returns False
-        """
         return cache.add(f"{key}", value, timeout=ttl)
 
     @staticmethod
     def set_to_cache(key, value, ttl=120):
-        """If the entered key is already taken,
-        then set the new value and time
-        """
         return cache.set(f"{key}", value, timeout=ttl)
 
     @staticmethod

@@ -13,11 +13,16 @@ class Product(models.Model):
     description = models.TextField()
     price = models.FloatField()
     thumbnail = models.URLField()
+    images = models.JSONField(default=list)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    created_at = models.DateTimeField(auto_now_add=True)
+    attributes = models.JSONField(default=dict)
     average_rating = models.FloatField(default=0.0)
     likes_count = models.PositiveIntegerField(default=0)
-    attributes = models.JSONField(default=dict)
+    reviews_count = models.PositiveIntegerField(default=0)
+    is_liked = models.BooleanField(default=False)
+    in_stock = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
